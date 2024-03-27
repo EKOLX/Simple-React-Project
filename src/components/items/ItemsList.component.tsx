@@ -2,8 +2,10 @@ import React from "react";
 
 import { ItemInterface } from "../../models/items/Item.interface";
 import { ItemComponent } from "./children/Item.component";
+import { LoaderComponent } from "../shared/Loader.component";
 
 type Props = {
+  loading: boolean;
   items: ItemInterface[];
   onItemSelect: (item: ItemInterface) => void;
 };
@@ -17,11 +19,13 @@ export class ItemsListComponent extends React.Component<Props> {
   }
 
   render(): React.ReactNode {
-    const { items } = this.props;
+    const { loading, items } = this.props;
 
-    return (
-      <div>
-        <h3>Items:</h3>
+    let element;
+    if (loading) {
+      element = <LoaderComponent />;
+    } else {
+      element = (
         <ul>
           {items.map((item: ItemInterface) => (
             <ItemComponent
@@ -32,6 +36,13 @@ export class ItemsListComponent extends React.Component<Props> {
             />
           ))}
         </ul>
+      );
+    }
+
+    return (
+      <div>
+        <h3>Items:</h3>
+        {element}
       </div>
     );
   }
