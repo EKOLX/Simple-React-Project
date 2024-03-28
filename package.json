@@ -5,12 +5,14 @@
   "type": "module",
   "scripts": {
     "start": "npm run dev",
-    "dev": "vite --mode dev",
-    "build": "tsc && vite build --mode production",
+    "dev": "vite --config vite.config.dev.ts --mode dev",
+    "build": "tsc && vite build --config vite.config.prod.ts --mode prod",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
+    "preview": "vite preview --config vite.config.dev.ts --mode dev",
     "test": "vitest run",
-    "test-watch": "npm run test -- --watch"
+    "test-watch": "npm run test -- --watch",
+    "with-jsonserver": "vite --config vite.config.jsonserver.ts --mode jsonserver",
+    "json-server-api": "json-server --port 3111 --watch json-server/db.json"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.2",
@@ -32,6 +34,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
     "jsdom": "^24.0.0",
+    "json-server": "^1.0.0-alpha.23",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "vitest": "^1.4.0"

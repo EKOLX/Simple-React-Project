@@ -3,9 +3,13 @@
     "composite": true,
     "skipLibCheck": true,
     "module": "ESNext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
     "strict": true
   },
-  "include": ["vite.config.ts"]
+  "include": [
+    "vite.config.jsonserver.ts",
+    "vite.config.dev.ts",
+    "vite.config.prod.ts"
+  ]
 }
