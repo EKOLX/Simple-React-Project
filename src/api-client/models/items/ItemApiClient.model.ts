@@ -1,5 +1,8 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-
+import {
+  HttpRequestParamsInterface,
+  HttpRequestType,
+  httpClientInstance,
+} from "@/http-client";
 import { ItemInterface } from "../../../models/items/Item.interface";
 import {
   ItemsApiClientEndpoints,
@@ -19,27 +22,13 @@ export class ItemsApiClientModel implements ItemsApiClientInterface {
   }
 
   fetchItems(): Promise<ItemInterface[]> {
-    return new Promise<ItemInterface[]>((resolve) => {
-      const endpoint = this.endpoints.fetchItems;
+    const requestParameters: HttpRequestParamsInterface = {
+      requestType: HttpRequestType.get,
+      endpoint: this.endpoints.fetchItems,
+      requiresToken: false,
+      mockDelay: this.mockDelay,
+    };
 
-      const options: AxiosRequestConfig = {
-        headers: {},
-      };
-
-      axios
-        .get(endpoint, options)
-        .then((response: AxiosResponse) => {
-          if (!this.mockDelay) {
-            resolve(response.data as ItemInterface[]);
-          } else {
-            setTimeout(() => {
-              resolve(response.data as ItemInterface[]);
-            }, this.mockDelay);
-          }
-        })
-        .catch((error: AxiosError) => {
-          console.error("ItemsApiClient: HttpClient: Get: error", error);
-        });
-    });
+    return httpClientInstance().request<ItemInterface[]>(requestParameters);
   }
 }
